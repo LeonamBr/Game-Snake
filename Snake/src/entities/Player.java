@@ -12,7 +12,7 @@ public class Player extends Rectangle {
 	
 	private int y;
 	
-	private int dificult = 5;
+	private int dificult = 3;
 	
 	private final int HEIGHT = 10;
 	
