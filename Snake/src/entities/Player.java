@@ -12,11 +12,16 @@ public class Player extends Rectangle {
 	
 	private int y;
 	
+	private int dificult = 5;
+	
 	private final int HEIGHT = 10;
 	
 	private final int WIDTH = 10;
 	
 	public static boolean uppressed, downpressed, rightpressed, leftpresseed;
+	
+	public Player() {
+	}
 	
 	public Player(int x, int y) {
 		this.x = x;
@@ -27,16 +32,16 @@ public class Player extends Rectangle {
 	public void tick() {
 		
 		if (uppressed) {
-			this.y-=3;
+			this.y-=dificult;
 		}
 		if (downpressed) {
-			y+=3;
+			y+=dificult;
 		}
 		if (rightpressed) {
-			x+=3;
+			x+=dificult;
 		}
 		if (leftpresseed) {
-			x-=3;
+			x-=dificult;
 		}
 		
 		
@@ -48,5 +53,27 @@ public class Player extends Rectangle {
 		g.fillRect(x, y, WIDTH, HEIGHT);
 		
 	}
+
+
+	public double getX() {
+		return x;
+	}
+
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+
+	public double getY() {
+		return y;
+	}
+
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	
 
 }

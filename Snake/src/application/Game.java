@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import entities.Food;
 import entities.Player;
 
 public class Game extends Canvas implements Runnable, KeyListener {
@@ -25,6 +26,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private BufferedImage image;
 
 	public Player player;
+	public Food food;
 
 	public void initFrame() {
 		frame = new JFrame("Snake AWT");
@@ -45,6 +47,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		this.addKeyListener(this);
 		player = new Player(400, 300);
+		food = new Food();
+		food.setPlayer(player);
 
 	}
 
@@ -72,6 +76,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public void tick() {
 
 		player.tick();
+		food.tick();
 
 	}
 
@@ -92,6 +97,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// ====================== ENTIDADES ========================= //
 		
 		player.render(g);
+		food.render(g);
 		
 		
 		// ========================================================== //
@@ -178,7 +184,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+
 
 	}
 
