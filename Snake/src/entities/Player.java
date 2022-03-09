@@ -8,9 +8,9 @@ public class Player extends Rectangle {
 	
 	private static final long serialVersionUID = 1L;
 
-	private int[] x = new int[80];
+	private int[] x = new int[4800];
 	
-	private int[] y = new int[60];
+	private int[] y = new int[4800];
 	
 	private int dificult = 10;
 	
@@ -26,9 +26,9 @@ public class Player extends Rectangle {
 	}
 	
 	public Player(int x, int y) {
-		for (int i = bodyparts; i > 0; i--) {
-			this.x[i] = x + i*dificult;
-			this.y[i] = y ;
+		for (int i = 0; i < bodyparts; i++) {
+			this.x[i] = x - i*dificult;
+			this.y[i] = y;
 		}
 	}
 		
@@ -60,8 +60,14 @@ public class Player extends Rectangle {
 	public void render(Graphics g) {
 		
 		for (int i = 0; i< bodyparts ; i++) {
-		g.setColor(Color.RED);
-		g.fillRect(x[i], y[i], WIDTH, HEIGHT);
+			if (i==0) {
+				g.setColor(Color.RED);
+				g.fillRect(x[i], y[i], WIDTH, HEIGHT);
+			}else {
+				g.setColor(Color.PINK);
+				g.fillRect(x[i], y[i], WIDTH, HEIGHT);
+			}
+		
 		}
 		
 	}

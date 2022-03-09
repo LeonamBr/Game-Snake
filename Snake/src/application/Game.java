@@ -13,13 +13,14 @@ import javax.swing.JFrame;
 
 import entities.Food;
 import entities.Player;
+import entities.Wall;
 
 public class Game extends Canvas implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	public static JFrame frame;
 	private Thread thread;
-	private boolean isRunning = true;
+	public static boolean isRunning = true;
 	private final int WIDTH = 800;
 	private final int HEIGHT = 600;
 	
@@ -27,6 +28,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	public Player player;
 	public Food food;
+	public Wall wall;
 
 	public void initFrame() {
 		frame = new JFrame("Snake AWT");
@@ -47,8 +49,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		this.addKeyListener(this);
 		player = new Player(400, 300);
+		Player.rightpressed = true;
 		food = new Food();
 		food.setPlayer(player);
+		wall = new Wall(player);
 		
 	}
 
@@ -77,6 +81,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		player.tick();
 		food.tick();
+		wall.tick();
 
 	}
 
@@ -96,8 +101,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		// ====================== ENTIDADES ========================= //
 		
-		player.render(g);
 		food.render(g);
+		player.render(g);
+		wall.render(g);
 		
 		
 		// ========================================================== //
