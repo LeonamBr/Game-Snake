@@ -165,24 +165,24 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			Player.rightpressed = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN && Player.uppressed == false) {
-			Player.uppressed = false;
 			Player.downpressed = true;
+			Player.uppressed = false;
 			Player.leftpresseed = false;
 			Player.rightpressed = false;
 		}
 	
 		if (e.getKeyCode() == KeyEvent.VK_LEFT && Player.rightpressed == false) {
+			Player.leftpresseed = true;
 			Player.uppressed = false;
 			Player.downpressed = false;
-			Player.leftpresseed = true;
 			Player.rightpressed = false;
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT && Player.leftpresseed == false) {
+			Player.rightpressed = true;
 			Player.uppressed = false;
 			Player.downpressed = false;
 			Player.leftpresseed = false;
-			Player.rightpressed = true;
 		}
 
 
