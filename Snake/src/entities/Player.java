@@ -8,11 +8,13 @@ public class Player extends Rectangle {
 	
 	private static final long serialVersionUID = 1L;
 
-	private int x;
+	private int[] x = new int[80];
 	
-	private int y;
+	private int[] y = new int[60];
 	
-	private int dificult = 3;
+	private int dificult = 10;
+	
+	private int bodyparts = 3;
 	
 	private final int HEIGHT = 10;
 	
@@ -24,24 +26,32 @@ public class Player extends Rectangle {
 	}
 	
 	public Player(int x, int y) {
-		this.x = x;
-		this.y = y;
+		for (int i = bodyparts; i > 0; i--) {
+			this.x[i] = x + i*dificult;
+			this.y[i] = y ;
+		}
 	}
 		
 	
 	public void tick() {
 		
+		for (int i = bodyparts; i>0;i--) {
+			x[i] = x[i-1];
+			y[i] = y[i-1];
+		}
+		
 		if (uppressed) {
-			this.y-=dificult;
+			y[0] = y[0] - dificult;
 		}
 		if (downpressed) {
-			y+=dificult;
+			y[0] = y[0] + dificult;
+			
 		}
 		if (rightpressed) {
-			x+=dificult;
+			x[0] = x[0] + dificult;			
 		}
 		if (leftpresseed) {
-			x-=dificult;
+			x[0] = x[0] - dificult;
 		}
 		
 		
@@ -49,31 +59,27 @@ public class Player extends Rectangle {
 	
 	public void render(Graphics g) {
 		
+		for (int i = 0; i< bodyparts ; i++) {
 		g.setColor(Color.RED);
-		g.fillRect(x, y, WIDTH, HEIGHT);
+		g.fillRect(x[i], y[i], WIDTH, HEIGHT);
+		}
 		
 	}
 
-
-	public double getX() {
+	public int[] getx() {
 		return x;
 	}
 
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-
-	public double getY() {
+	public int[] gety() {
 		return y;
 	}
 
+	public int getBodyparts() {
+		return bodyparts;
+	}
 
-	public void setY(int y) {
-		this.y = y;
+	public void bodyAdd() {
+		bodyparts++;
 	}
 	
-	
-
 }

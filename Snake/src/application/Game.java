@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-import entities.Tail;
 import entities.Food;
 import entities.Player;
 
@@ -28,7 +27,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	public Player player;
 	public Food food;
-	public Tail tail;
 
 	public void initFrame() {
 		frame = new JFrame("Snake AWT");
@@ -50,7 +48,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		this.addKeyListener(this);
 		player = new Player(400, 300);
 		food = new Food();
-		tail = new Tail(player);
 		food.setPlayer(player);
 		
 	}
@@ -80,7 +77,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		player.tick();
 		food.tick();
-		tail.tick();
 
 	}
 
@@ -102,7 +98,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		player.render(g);
 		food.render(g);
-		tail.render(g);
 		
 		
 		// ========================================================== //
@@ -118,7 +113,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public void run() {
 
 		long lastTime = System.nanoTime();
-		double amountofTicks = 60.0;
+		double amountofTicks = 30.0;
 		double ns = 1000000000 / amountofTicks;
 		double delta = 0;
 		int frames = 0;
