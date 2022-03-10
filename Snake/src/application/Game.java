@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 import entities.Food;
+import entities.GameOver;
 import entities.Player;
 import entities.Wall;
 
@@ -21,14 +22,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static JFrame frame;
 	private Thread thread;
 	public static boolean isRunning = true;
-	private final int WIDTH = 800;
-	private final int HEIGHT = 600;
-	
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
+	public static boolean enterpressed = false;
+	public static boolean showMessage = true;
+	public static int framesGameOver = 0;
+
+	public static String status = "NORMAL";
+
 	private BufferedImage image;
 
-	public Player player;
-	public Food food;
-	public Wall wall;
+	public static Player player;
+	public static Food food;
+	public static Wall wall;
+	public static GameOver gameOver;
 
 	public void initFrame() {
 		frame = new JFrame("Snake AWT");
@@ -44,7 +51,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		initFrame();
-		
+
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
 		this.addKeyListener(this);
@@ -53,7 +60,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		food = new Food();
 		food.setPlayer(player);
 		wall = new Wall(player);
-		
+		gameOver = new GameOver();
+
 	}
 
 	public synchronized void start() {
@@ -65,9 +73,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	}
 
 	public synchronized void stop() {
-		
+
 		isRunning = false;
-		
+
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
@@ -76,41 +84,47 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	}
 
-
 	public void tick() {
 
-		player.tick();
-		food.tick();
-		wall.tick();
+		if (status == "NORMAL") {
+			player.tick();
+			food.tick();
+			wall.tick();
+		}else if(status == "GAME_OVER") {
+			
+			gameOver.tick();
+			
+		}
 
 	}
 
 	public void render() {
-		
+
 		BufferStrategy bs = this.getBufferStrategy();
-		
+
 		if (bs == null) {
 			this.createBufferStrategy(3);
 			return;
 		}
-		
-		
+
 		Graphics g = image.getGraphics();
-		g.setColor(new Color(0,0,0));
+		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
+
 		// ====================== ENTIDADES ========================= //
-		
+
 		food.render(g);
 		player.render(g);
 		wall.render(g);
-		
-		
+
 		// ========================================================== //
-		
+
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
+		
+		gameOver.render(g);
+		
 		bs.show();
 
 	}
@@ -146,18 +160,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			}
 
 		}
-		
+
 		stop();
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
+
 		if (e.getKeyCode() == KeyEvent.VK_UP && Player.downpressed == false) {
 			Player.uppressed = true;
 			Player.downpressed = false;
@@ -170,28 +184,37 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			Player.leftpresseed = false;
 			Player.rightpressed = false;
 		}
-	
+
 		if (e.getKeyCode() == KeyEvent.VK_LEFT && Player.rightpressed == false) {
 			Player.leftpresseed = true;
 			Player.uppressed = false;
 			Player.downpressed = false;
 			Player.rightpressed = false;
 		}
-		
+
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT && Player.leftpresseed == false) {
 			Player.rightpressed = true;
 			Player.uppressed = false;
 			Player.downpressed = false;
 			Player.leftpresseed = false;
 		}
-
+		
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			enterpressed = true;
+		}
+		
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-
+		
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			enterpressed = false;
+		}
 
 	}
+	
+	
 
 }

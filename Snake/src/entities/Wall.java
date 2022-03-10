@@ -16,24 +16,24 @@ public class Wall {
 
 		for (int i = player.getBodyparts(); i > 0; i--) {
 			if (player.getx()[0] == player.getx()[i] && player.gety()[0] == player.gety()[i]) {
-				Game.isRunning = false;
+				Game.status = "GAME_OVER";
 			}
 		}
 		
 		if (player.getx()[0] < 0) {
-			Game.isRunning = false;
+			Game.status = "GAME_OVER";
 		}
 		
-		if (player.getx()[0] > 800) {
-			Game.isRunning = false;
+		if (player.getx()[0] >= 800) {
+			Game.status = "GAME_OVER";
 		}
 		
 		if (player.gety()[0] < 0) {
-			Game.isRunning = false;
+			Game.status = "GAME_OVER";
 		}
 		
-		if (player.gety()[0] > 600) {
-			Game.isRunning = false;
+		if (player.gety()[0] >= 600) {
+			Game.status = "GAME_OVER";
 		}
 		
 	}
@@ -43,4 +43,9 @@ public class Wall {
 		
 	}
 
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	
 }
