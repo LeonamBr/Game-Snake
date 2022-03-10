@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 
 import entities.Food;
 import entities.GameOver;
+import entities.Menu;
 import entities.Player;
 import entities.Wall;
 
@@ -28,7 +29,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static boolean showMessage = true;
 	public static int framesGameOver = 0;
 
-	public static String status = "NORMAL";
+	public static String status = "MENU";
 
 	private BufferedImage image;
 
@@ -36,6 +37,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static Food food;
 	public static Wall wall;
 	public static GameOver gameOver;
+	public static Menu menu;
 
 	public void initFrame() {
 		frame = new JFrame("Snake AWT");
@@ -61,6 +63,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		food.setPlayer(player);
 		wall = new Wall(player);
 		gameOver = new GameOver();
+		menu = new Menu();
 
 	}
 
@@ -90,10 +93,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			player.tick();
 			food.tick();
 			wall.tick();
-		}else if(status == "GAME_OVER") {
-			
+		} else if (status == "GAME_OVER") {
+
 			gameOver.tick();
-			
+
+		} else if (status == "MENU") {
+
+			menu.tick();
+
 		}
 
 	}
@@ -122,9 +129,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
-		
+
 		gameOver.render(g);
-		
+		menu.render(g);
+
 		bs.show();
 
 	}
@@ -173,16 +181,29 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 
 		if (e.getKeyCode() == KeyEvent.VK_UP && Player.downpressed == false) {
-			Player.uppressed = true;
-			Player.downpressed = false;
-			Player.leftpresseed = false;
-			Player.rightpressed = false;
+			if (status == "NORMAL") {
+				Player.uppressed = true;
+				Player.downpressed = false;
+				Player.leftpresseed = false;
+				Player.rightpressed = false;
+			}
+
+			if (status == "MENU") {
+				Menu.upPressed = true;
+			}
+
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN && Player.uppressed == false) {
-			Player.downpressed = true;
-			Player.uppressed = false;
-			Player.leftpresseed = false;
-			Player.rightpressed = false;
+			if (status == "NORMAL") {
+				Player.downpressed = true;
+				Player.uppressed = false;
+				Player.leftpresseed = false;
+				Player.rightpressed = false;
+			}
+			
+			if (status == "MENU") {
+				Menu.downPressed = true;
+			}
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_LEFT && Player.rightpressed == false) {
@@ -198,23 +219,34 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			Player.downpressed = false;
 			Player.leftpresseed = false;
 		}
-		
+
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			enterpressed = true;
 		}
-		
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
+
+		if (e.getKeyCode() == KeyEvent.VK_UP && Player.downpressed == false) {
+
+			if (status == "MENU") {
+				Menu.upPressed = false;
+			}
+
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN && Player.uppressed == false) {
+
+			if (status == "MENU") {
+				Menu.downPressed = false;
+			}
+		}
+
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			enterpressed = false;
 		}
 
 	}
-	
-	
 
 }

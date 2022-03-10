@@ -22,6 +22,7 @@ public class GameOver {
 
 		if (Game.enterpressed == true) {
 
+			Game.enterpressed = false;
 			Game.player = new Player(400, 300);
 
 			Player.rightpressed = true;
@@ -34,7 +35,7 @@ public class GameOver {
 			Player.downpressed = false;
 			Player.uppressed = false;
 
-			Game.status = "NORMAL";
+			Game.status = "MENU";
 		}
 
 	}

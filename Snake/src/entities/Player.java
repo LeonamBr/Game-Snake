@@ -29,6 +29,10 @@ public class Player extends Rectangle {
 		for (int i = 0; i < bodyparts; i++) {
 			this.x[i] = x - i*dificult;
 			this.y[i] = y;
+			rightpressed = true;
+			uppressed = false;
+			downpressed = false;
+			leftpresseed = false;
 		}
 	}
 		
@@ -53,7 +57,6 @@ public class Player extends Rectangle {
 		if (leftpresseed) {
 			x[0] = x[0] - dificult;
 		}
-		
 		
 	}
 	
